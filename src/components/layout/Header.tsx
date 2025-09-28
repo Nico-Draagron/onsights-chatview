@@ -1,5 +1,6 @@
-import { MessageCircle, Database, Settings, Menu, Zap } from "lucide-react";
+import { MessageCircle, Database, Settings, Menu, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "next-themes";
 import onsightsIcon from "@/assets/onsights-icon.png";
 
 interface HeaderProps {
@@ -7,6 +8,8 @@ interface HeaderProps {
 }
 
 const Header = ({ onToggleSidebar }: HeaderProps) => {
+  const { theme, setTheme } = useTheme();
+  
   return (
     <header className="h-16 border-b bg-card/50 backdrop-blur-md supports-[backdrop-filter]:bg-card/80">
       <div className="flex h-full items-center justify-between px-6">
@@ -15,13 +18,13 @@ const Header = ({ onToggleSidebar }: HeaderProps) => {
             variant="ghost"
             size="sm"
             onClick={onToggleSidebar}
-            className="md:hidden"
+            className="lg:hidden"
           >
             <Menu className="h-5 w-5" />
           </Button>
           
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl overflow-hidden bg-gradient-primary p-1">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl overflow-hidden bg-gradient-primary p-1 shadow-glow">
               <img 
                 src={onsightsIcon} 
                 alt="ONSights" 
@@ -48,6 +51,19 @@ const Header = ({ onToggleSidebar }: HeaderProps) => {
           <Button variant="ghost" size="sm" className="hover:bg-primary/5">
             <MessageCircle className="h-4 w-4" />
             <span className="hidden sm:inline ml-2">Histórico</span>
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="hover:bg-accent"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-4 w-4" />
+            ) : (
+              <Moon className="h-4 w-4" />
+            )}
           </Button>
           
           <Button variant="ghost" size="sm" className="hover:bg-primary/5">

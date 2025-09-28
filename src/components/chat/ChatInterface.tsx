@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Loader2 } from "lucide-react";
+import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import ChatMessage from "./ChatMessage";
 import QuickActions from "./QuickActions";
+import TypingIndicator from "./TypingIndicator";
 
 interface Message {
   id: string;
@@ -83,12 +84,7 @@ const ChatInterface = () => {
             <ChatMessage key={message.id} message={message} />
           ))}
           
-          {isLoading && (
-            <div className="flex items-center gap-2 text-muted-foreground">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              <span>Processando sua pergunta...</span>
-            </div>
-          )}
+          {isLoading && <TypingIndicator />}
           
           <div ref={messagesEndRef} />
         </div>

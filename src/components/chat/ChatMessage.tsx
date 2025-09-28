@@ -23,16 +23,16 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
   return (
     <div className={`flex gap-3 message-enter ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary">
-          <Zap className="h-4 w-4 text-primary-foreground" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-primary shadow-md">
+          <Zap className="h-5 w-5 text-primary-foreground" />
         </div>
       )}
       
       <div className={`max-w-2xl ${isUser ? 'order-1' : ''}`}>
-        <Card className={`p-4 ${
+        <div className={`rounded-2xl px-4 py-3 shadow-sm ${
           isUser 
-            ? 'bg-chat-user text-chat-user-foreground' 
-            : 'bg-chat-assistant text-chat-assistant-foreground'
+            ? 'bg-chat-user text-chat-user-foreground ml-12' 
+            : 'bg-chat-assistant text-chat-assistant-foreground mr-12'
         }`}>
           <div className="space-y-3">
             <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -41,41 +41,51 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
             
             {/* Chart Display */}
             {message.chartUrl && (
-              <div className="space-y-3">
-                <div className="rounded-lg border bg-card p-4">
-                  <img 
-                    src={message.chartUrl} 
-                    alt="Gráfico gerado" 
-                    className="w-full rounded-md"
-                  />
+              <Card className="p-4 bg-card border-2 border-primary/10">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 pb-2 border-b">
+                    <div className="h-2 w-2 bg-primary rounded-full"></div>
+                    <h4 className="text-sm font-medium text-primary">Gráfico Gerado</h4>
+                  </div>
+                  
+                  <div className="rounded-lg overflow-hidden">
+                    <img 
+                      src={message.chartUrl} 
+                      alt="Gráfico gerado" 
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-2 pt-2">
+                    <Button variant="outline" size="sm" className="hover:bg-primary/5">
+                      <Download className="h-3 w-3 mr-1" />
+                      Baixar PNG
+                    </Button>
+                    <Button variant="outline" size="sm" className="hover:bg-primary/5">
+                      <Share2 className="h-3 w-3 mr-1" />
+                      Compartilhar
+                    </Button>
+                  </div>
                 </div>
-                
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
-                    <Download className="h-3 w-3 mr-1" />
-                    Baixar
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Share2 className="h-3 w-3 mr-1" />
-                    Compartilhar
-                  </Button>
-                </div>
-              </div>
+              </Card>
             )}
             
             {/* Data Table */}
             {message.data && (
-              <div className="rounded-lg border bg-card p-4">
-                <h4 className="mb-2 text-sm font-medium">Dados Consultados</h4>
+              <Card className="p-4 bg-muted/30 border border-muted">
+                <div className="flex items-center gap-2 pb-2 mb-2 border-b border-muted">
+                  <div className="h-2 w-2 bg-secondary rounded-full"></div>
+                  <h4 className="text-sm font-medium text-secondary">Dados Consultados</h4>
+                </div>
                 <div className="overflow-x-auto">
                   <pre className="text-xs text-muted-foreground">
                     {JSON.stringify(message.data, null, 2)}
                   </pre>
                 </div>
-              </div>
+              </Card>
             )}
           </div>
-        </Card>
+        </div>
         
         <p className={`mt-1 text-xs text-muted-foreground ${isUser ? 'text-right' : 'text-left'}`}>
           {format(message.timestamp, 'HH:mm', { locale: ptBR })}
@@ -83,8 +93,8 @@ const ChatMessage = ({ message }: ChatMessageProps) => {
       </div>
       
       {isUser && (
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-muted">
-          <User className="h-4 w-4 text-muted-foreground" />
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-muted to-muted/70 shadow-md">
+          <User className="h-5 w-5 text-muted-foreground" />
         </div>
       )}
     </div>
